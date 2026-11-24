@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jasleen Poonie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE work: formal, like a published research note from a central bank or macro desk
+   IDEA a research publication: masthead, contents, numbered exhibits, notes beside figures
+   PICTURE overview: a key-figures panel; projects: the live Taylor rule scale and the gilt curve as exhibits
+   COLOUR espresso #2a2620 masthead, cream #faf6ee pages, burgundy #7a2e3a accent, soft grey panels; night #0f1420
+   TYPE Spectral 500/600 headings + Inter text
+   LAYOUT masthead and page tabs; overview in two columns (CV left, figures right); stacks under 860px */
+:root{color-scheme:light dark;--bg:light-dark(#faf6ee,#1a1814);--soft:light-dark(#f2ebdd,#24211b);--ink:light-dark(#23201b,#ece6da);--mute:light-dark(#6b6457,#b0a898);--rule:light-dark(#e2d9c6,#36322a);--acc:light-dark(#7a2e3a,#e0a3ad);--acc-soft:light-dark(#f3e4e2,#33221f);--navy:#2a2620;--navy-ink:#ffffff}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:120px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,Segoe UI,sans-serif;overflow-x:clip}
+a{color:var(--acc)}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:max(4vw,16px)}
+header.mast{background:var(--navy);color:var(--navy-ink);position:sticky;top:0;z-index:5}
+.mast .wrap{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 24px;padding-top:18px}
+.brand{padding-bottom:12px}
+.brand b{display:block;font:600 24px/1.1 Spectral,Georgia,serif;letter-spacing:-.01em}
+.brand span{font-size:14px;color:#d8cfbf}
+.tabs{display:flex;flex-wrap:wrap;gap:0 4px}
+.tabs a{display:block;padding:12px 12px 13px;text-decoration:none;color:#d8cfbf;font-weight:500;font-size:15px;border-bottom:3px solid transparent}
+.tabs a:hover{color:#fff}
+.tabs a[aria-current=page]{color:#fff;border-color:#e0a3ad}
+.tabs a:focus-visible{outline:2px solid #fff;outline-offset:-2px}
+.btn:focus-visible,.seg button:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+main{padding-block:clamp(28px,4vw,56px)}
+.view[hidden]{display:none}
+h1{font:500 clamp(34px,4.6vw,52px)/1.05 Spectral,Georgia,serif;letter-spacing:-.02em;margin:0;text-wrap:balance}
+h2{font:500 clamp(26px,3vw,34px)/1.1 Spectral,Georgia,serif;letter-spacing:-.01em;margin:0 0 6px;text-wrap:balance}
+h3{font:600 18px/1.3 Inter,system-ui,sans-serif;margin:0}
+p{margin:0 0 10px}
+.lede{font-size:18px;color:var(--mute);max-width:64ch;margin-top:14px}
+.small{font-size:14px;color:var(--mute)}
+.grid2{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:32px 56px}
+.sec{margin-top:36px}
+.sec>h2{padding-bottom:8px;border-bottom:2px solid var(--acc);margin-bottom:4px}
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 16px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.item .when{font-size:14px;color:var(--mute);white-space:nowrap;text-align:right}
+.item .org{font-size:14px;color:var(--mute)}
+.item ul{grid-column:1/-1;margin:6px 0 0;padding-left:18px}
+.item li{margin:2px 0}
+.panel{background:var(--soft);border:1px solid var(--rule);padding:20px 22px}
+.panel+.panel{margin-top:16px}
+.panel h3{margin-bottom:10px}
+.kf{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px}
+.kf div{border-top:2px solid var(--rule);padding-top:6px}
+.kf strong{display:block;font:500 28px/1.1 Spectral,Georgia,serif;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kf span{font-size:13px;color:var(--mute);line-height:1.35;display:block;margin-top:3px}
+.kf .a{border-color:var(--acc)}
+.kf .a strong{color:var(--acc)}
+.plist{list-style:none;margin:0;padding:0}
+.plist li{padding:10px 0;border-bottom:1px solid var(--rule)}
+.plist li:last-child{border:0}
+.plist a{font-weight:600;text-decoration:none;color:var(--ink)}
+.plist a:hover{color:var(--acc)}
+.plist p{margin:2px 0 0;font-size:14px;color:var(--mute)}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags span{border:1px solid var(--rule);padding:4px 10px;font-size:14px;background:var(--bg)}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border:1px solid var(--acc);border-radius:3px;background:var(--acc);color:light-dark(#fff,#0f1420);font:500 15px Inter,system-ui,sans-serif;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--acc)}
+.btn:hover{filter:brightness(1.08)}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.contents{display:flex;flex-wrap:wrap;gap:6px 20px;margin:18px 0 8px;padding:12px 0;border-block:1px solid var(--rule);font-size:15px}
+.contents a{text-decoration:none;font-weight:500}
+.proj{padding-top:36px;margin-top:36px;border-top:1px solid var(--rule)}
+.proj-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 24px;align-items:end;margin-bottom:16px}
+.proj-head .meta{font-size:14px;color:var(--mute);text-align:right}
+.pgrid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px 48px}
+.pgrid h3{font-size:15px;margin:16px 0 4px}
+.pgrid h3:first-child{margin-top:0}
+.ex{border:1px solid var(--rule);background:var(--soft);padding:16px 18px}
+.ex-t{font-size:14px;font-weight:600;margin-bottom:6px}
+.ex-n{font-size:13px;color:var(--mute);margin:8px 0 0}
+.tscroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--rule);text-align:left}
+th{font-weight:600;font-size:13px;color:var(--mute)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.hl td{color:var(--acc);font-weight:600}
+.call{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;padding:14px 16px;background:var(--acc-soft);border-left:3px solid var(--acc);margin-bottom:14px}
+.call strong{font:600 22px/1.2 Spectral,Georgia,serif;color:var(--acc)}
+.fig{position:relative;height:190px}
+.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+.curve{position:relative;height:210px}
+.curve>svg{position:absolute;inset:0;width:100%;height:100%}
+svg text{font-family:Inter,system-ui,sans-serif;paint-order:stroke;stroke:var(--soft);stroke-width:4px}
+.readout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:6px}
+.readout div{border-top:2px solid var(--rule);padding-top:6px}
+.readout .a{border-color:var(--acc)}
+.readout span{display:block;font-size:13px;color:var(--mute)}
+.readout strong{font:500 clamp(24px,3vw,32px)/1.1 Spectral,Georgia,serif;font-variant-numeric:tabular-nums;white-space:nowrap}
+.readout .a strong{color:var(--acc)}
+.verdict{font-weight:600;margin:8px 0 0}
+.ctrls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px 24px;margin-top:8px}
+.ctrl label{display:flex;justify-content:space-between;gap:8px;font-size:14px;color:var(--mute)}
+.ctrl output{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.seg{display:flex;border:1px solid var(--rule);margin-top:6px;background:var(--bg)}
+.seg button{flex:1;min-height:44px;border:0;background:transparent;color:var(--ink);font:500 15px Inter,system-ui,sans-serif;cursor:pointer}
+.seg button+button{border-left:1px solid var(--rule)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+input[type=range]{width:100%;height:44px;margin:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:4px;background:var(--rule)}
+input[type=range]::-moz-range-track{height:4px;background:var(--rule)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--acc);border:3px solid var(--soft);margin-top:-8px;box-shadow:0 0 0 1px var(--acc)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--acc);border:3px solid var(--soft)}
+.formula{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;align-items:center;margin-top:10px;font-size:14px}
+.formula code{font-family:inherit;overflow-wrap:anywhere}
+.contact{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px 56px;align-items:start}
+.contact dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 18px}
+.contact dt{color:var(--mute)}
+.contact dd{margin:0;overflow-wrap:anywhere}
+.item .sum{grid-column:1/-1;margin:8px 0 0;color:var(--ink)}
+.item .sk{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.item .sk span{font-size:13px;border:1px solid var(--rule);padding:2px 8px;color:var(--mute)}
+.exp-intro{display:grid;grid-template-columns:repeat(auto-fit,minmax(10em,1fr));gap:14px 18px;margin-top:24px}
+.exp-intro div{border-top:2px solid var(--acc);padding-top:6px}
+.exp-intro strong{display:block;font:500 26px/1.1 Spectral,Georgia,serif;white-space:nowrap}
+.exp-intro span{font-size:13px;color:var(--mute)}
+#v-experience .tl{max-width:1000px}
+#v-experience .sec>h2{margin-bottom:0}
+#v-experience .item{grid-template-columns:minmax(0,180px) minmax(0,1fr);column-gap:40px;padding:20px 0}
+#v-experience .item>div:first-child{grid-column:2;grid-row:1}
+#v-experience .item .when{grid-column:1;grid-row:1/span 4;text-align:left;white-space:normal;font-size:15px;color:var(--ink);font-weight:500;padding-top:2px}
+#v-experience .item .sum,#v-experience .item ul,#v-experience .item .sk{grid-column:2}
+@media(max-width:640px){html{scroll-padding-top:150px}}
+@media(max-width:640px){#v-experience .item{grid-template-columns:minmax(0,1fr)}#v-experience .item .when{grid-row:auto;grid-column:1;font-size:14px;color:var(--mute);font-weight:400;padding:0}#v-experience .item>div:first-child,#v-experience .item .sum,#v-experience .item ul,#v-experience .item .sk{grid-column:1;grid-row:auto}}
+.bloglist{list-style:none;margin:0;padding:0}
+.bloglist li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 16px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.bloglist a{font:500 21px/1.3 Spectral,Georgia,serif;color:var(--ink);text-decoration:none}
+.bloglist a:hover{color:var(--acc);text-decoration:underline}
+.bloglist .pd{font-size:14px;color:var(--mute);white-space:nowrap;padding-top:4px}
+.bloglist p{grid-column:1/-1;margin:2px 0 0;color:var(--mute)}
+.post .post-body{max-width:68ch}
+.post .post-body h3{font-size:17px;margin:20px 0 6px}
+.post .post-body p{margin:0 0 12px}
+footer{background:var(--navy);color:#d8cfbf;padding:22px 0;font-size:13px}
+@media(max-width:860px){.grid2,.pgrid,.contact{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:640px){.ctrls{grid-template-columns:minmax(0,1fr)}.proj-head{grid-template-columns:minmax(0,1fr)}.proj-head .meta{text-align:left}.tabs{flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none}.tabs a{padding:10px 7px 11px;font-size:14px;flex:none}.brand{padding-bottom:4px}.fig{height:170px}.kf strong{font-size:24px}}
+@media(prefers-reduced-motion:reduce){#ptr{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="mast"><div class="wrap">
+<div class="brand"><b>Jasleen Poonie</b><span>Economics, University of Cambridge</span></div>
+<nav class="tabs" aria-label="Pages">
+<a href="#overview" data-v="overview">Overview</a>
+<a href="#projects" data-v="projects">Projects</a>
+<a href="#experience" data-v="experience">Experience</a>
+<a href="#blog" data-v="blog">Blog</a>
+<a href="#contact" data-v="contact">Contact</a>
+</nav>
+</div></header>
+
+<main class="wrap">
+
+<section class="view" id="v-overview" aria-label="Overview">
+<h1>Hello, I'm Jasleen</h1>
+<p class="lede">I'm a first-year Economics student at Queens' College, Cambridge, and I love finding out how central banks and markets shape everyday life. Outside lectures I work as an NHS carer, take part in trading competitions and teach myself more through my own projects. I'm always keen to learn from people in the industry.</p>
+<div class="cta"><a class="btn" href="#projects">See my projects</a><a class="btn ghost" href="#contact">Say hello</a></div>
+
+<div class="grid2 sec">
+<div>
+<div class="sec" style="margin-top:0"><h2>Education</h2>
+<div class="item"><div><h3>University of Cambridge, BA Economics</h3><div class="org">Queens' College</div></div><div class="when">2026 &ndash; 2029</div>
+<ul><li>Macroeconomic Principles, Quantitative Methods, Microeconomics, Governing Britain since 1945</li><li>Bloomberg Market Concepts</li></ul></div>
+<div class="item"><div><h3>Leicester Grammar School, Academic Scholar</h3><div class="org">A-Levels and GCSEs</div></div><div class="when">2019 &ndash; 2026</div>
+<ul><li>Mathematics A*, Further Mathematics A*, Physics A, Economics A</li><li>11 Grade 9 GCSEs: top 145 students in the UK of a cohort of 667,340</li></ul></div>
+</div>
+
+<div class="sec"><h2>Experience</h2>
+<div class="item"><div><h3>Part-time carer</h3><div class="org">NHS, Leicester</div></div><div class="when">Jun 2026 &ndash; now</div></div>
+<div class="item"><div><h3>Mathematics tutor, Year 8 class</h3><div class="org">Leicester Grammar School</div></div><div class="when">Sep 2025 &ndash; Jun 2026</div></div>
+<div class="item"><div><h3>Intern, Future Thought Leaders' Programme</h3><div class="org">Institute of Economic Affairs</div></div><div class="when">Jul 2025</div></div>
+<div class="item"><div><h3>Founder and project manager</h3><div class="org">Young Enterprise</div></div><div class="when">Aug 2024 &ndash; Sep 2025</div></div>
+<div class="item"><div><h3>Finance Summer School</h3><div class="org">University of Brighton</div></div><div class="when">Aug 2025</div></div>
+<p class="small" style="margin-top:10px"><a href="#experience">Full experience and achievements</a></p>
+</div>
+
+<div class="sec"><h2>Trading</h2>
+<div class="item"><div><h3>Cambridge University x Optiver Trade-a-thon</h3><div class="org">Live market making simulation, Cambridge Marshall Society</div></div><div class="when">Nov 2026</div></div>
+<div class="item"><div><h3>SIFMA Stock Market Game, portfolio manager</h3><div class="org">14.6% return in 8 months; 1st of 47 regional teams</div></div><div class="when">2024 &ndash; 2025</div></div>
+</div>
+
+<div class="sec"><h2>From my blog</h2>
+<ul class="bloglist"><li><a href="#post-optiver">What I learned making markets at the Optiver Trade-a-thon</a><span class="pd">24 Nov 2026</span><p>Five lessons from trading a single stock live, from expected value to knowing when to take risk.</p></li><li><a href="#post-boe">Why I think the Bank of England can afford to wait</a><span class="pd">20 Nov 2026</span><p>Markets expect another rate rise in December. Here's why I lean the other way, and what would change my mind.</p></li><li><a href="#post-taylor">Which inflation should a Taylor rule use?</a><span class="pd">15 Nov 2026</span><p>Building a simple model taught me that the 'right' interest rate depends a lot on one choice.</p></li></ul>
+<p class="small" style="margin-top:10px"><a href="#blog">All posts</a></p>
+</div>
+</div>
+
+<aside>
+<div class="panel"><h3>At a glance</h3>
+<div class="kf">
+<div class="a"><strong>A* A*</strong><span>Mathematics and Further Mathematics</span></div>
+<div><strong>Top 0.02%</strong><span>GCSE results nationally</span></div>
+<div><strong>1st</strong><span>with 100%, Leicester Advanced Maths (1 of 25 places)</span></div>
+<div><strong>1st of 600+</strong><span>University of Exeter economics essay</span></div>
+<div><strong>1 of 24</strong><span>IEA interns from 700+ applicants</span></div>
+<div><strong>15 hrs</strong><span>a week as an NHS carer, alongside Cambridge</span></div>
+</div></div>
+
+<div class="panel"><h3>Projects</h3>
+<ul class="plist">
+<li><a href="#mpc">Bank of England MPC rate recommendation</a><p>Hold at 4.00% vs. an ~80% market-implied hike</p></li>
+<li><a href="#taylor">Taylor rule model of the UK policy rate</a><p>Live model: core vs. headline inflation</p></li>
+<li><a href="#gilt">Relative value: UK gilt curve</a><p>DV01-neutral 2s10s steepener</p></li>
+<li><a href="#credit">Fixed income and credit: Rolls-Royce</a><p>Leverage, coverage and bond relative value</p></li>
+<li><a href="#eqt">EQT / Intertek &pound;10.9bn take-private</a><p>DCF within 3% of the final deal terms</p></li>
+<li><a href="#abf">Associated British Foods sum-of-the-parts</a><p>&pound;21.1bn value vs. &pound;14.7bn market cap</p></li>
+<li><a href="#rreq">Rolls-Royce equity valuation</a><p>3-stage DCF and comps: Hold at 904p</p></li>
+</ul></div>
+
+<div class="panel"><h3>Skills</h3>
+<div class="tags"><span>Excel modelling</span><span>DCF</span><span>Credit ratios</span><span>Bloomberg Terminal</span><span>Probability and statistics</span><span>Expected value</span><span>Logic and proof</span><span>PowerPoint</span></div>
+</div>
+
+<div class="panel"><h3>Things I enjoy</h3>
+<ul class="plist">
+<li><b>Markets</b><p>Following central banks, rates and FX</p></li>
+<li><b>Climbing</b><p>Including a trip to the Himalayas</p></li>
+<li><b>Motorsport</b><p>Building and racing Formula cars</p></li>
+<li><b>Salsa and football</b><p>Dancing, and cheering on Leicester City</p></li>
+</ul></div>
+
+</aside>
+</div>
+</section>
+
+<section class="view" id="v-projects" aria-label="Projects" hidden>
+<h1>Projects</h1>
+<p class="lede">Projects I've taken on in my own time, from July to November 2026, to learn how markets and policy really work. My macro projects follow one question I find fascinating: is the recent rise in UK inflation mostly an energy shock, and if so, could the Bank of England afford to wait?</p>
+<nav class="contents" aria-label="Projects on this page"><a href="#mpc">MPC rate recommendation</a><a href="#taylor">Taylor rule model</a><a href="#gilt">Gilt curve trade</a><a href="#credit">Rolls-Royce credit</a><a href="#eqt">EQT / Intertek</a><a href="#abf">ABF sum-of-the-parts</a><a href="#rreq">Rolls-Royce equity</a></nav>
+
+<article class="proj" id="mpc">
+<div class="proj-head"><h2>Bank of England MPC rate recommendation</h2><div class="meta">Monetary policy note<br>For the 17 December 2026 MPC</div></div>
+<div class="pgrid">
+<div>
+<div class="call"><strong>Hold at 4.00%</strong><span>with hawkish guidance, against an ~80% market-implied hike</span></div>
+<h3>Background</h3>
+<p>The MPC raised Bank Rate by 25bp to 4.00% on 5 November 2026 by an 8&ndash;1 vote, with one member voting for 50bp. Rate futures now price an ~80% chance of another hike in December and two more by June 2027.</p>
+<h3>Why I lean towards holding</h3>
+<p>October CPI rose to 3.6%, but the increase came from record diesel prices and an earlier tobacco duty rise. Core inflation stayed at 2.8%, and regular pay growth slowed from 3.7% to 3.5%. To me this looks mostly like an energy supply shock, which interest rates can do little to fix, so I think there is a good case for patience.</p>
+<h3>What could prove me wrong</h3>
+<p>Services inflation is sticky at 3.7% and unemployment fell to 4.6%. If either feeds into wage-setting, second-round effects could follow. So my suggestion keeps a future rise firmly on the table, and I'm looking forward to seeing how the December decision compares.</p>
+</div>
+<div class="ex">
+<div class="ex-t">Exhibit 1. UK inflation and labour market, latest</div>
+<div class="tscroll"><table>
+<thead><tr><th>Measure</th><th class="n">Latest</th><th class="n">Prior</th></tr></thead>
+<tbody>
+<tr class="hl"><td>CPI, headline</td><td class="n">3.6%</td><td class="n">3.5%</td></tr>
+<tr><td>CPI, core</td><td class="n">2.8%</td><td class="n">&ndash;</td></tr>
+<tr><td>CPI, services</td><td class="n">3.7%</td><td class="n">3.7%</td></tr>
+<tr><td>CPI, goods</td><td class="n">3.5%</td><td class="n">3.2%</td></tr>
+<tr><td>Regular pay growth</td><td class="n">3.5%</td><td class="n">3.7%</td></tr>
+<tr><td>Unemployment</td><td class="n">4.6%</td><td class="n">4.7%</td></tr>
+<tr><td>Bank Rate</td><td class="n">4.00%</td><td class="n">3.75%</td></tr>
+</tbody></table></div>
+<p class="ex-n">Sources: ONS (CPI to Oct 2026; labour market to Sep 2026); Bank of England. Prior is the previous release.</p>
+</div>
+</div>
+</article>
+
+<article class="proj" id="taylor">
+<div class="proj-head"><h2>Taylor rule model of the UK policy rate</h2><div class="meta">Quantitative model<br>Live sensitivity analysis</div></div>
+<div class="ex">
+<div class="ex-t">Exhibit 2. Where the Taylor rule puts Bank Rate</div>
+<div class="readout" aria-live="polite">
+<div><span>Bank Rate</span><strong>4.00%</strong></div>
+<div><span>Market path</span><strong>~4.75%</strong></div>
+<div class="a"><span>Taylor rule</span><strong id="roT">3.70%</strong></div>
+</div>
+<div class="fig"><svg id="scale" role="img" aria-label="Policy rate scale showing Bank Rate, market pricing and the Taylor rule estimate"></svg></div>
+<div class="ctrls">
+<div class="ctrl"><label>Inflation measure <output id="oPi">2.8%</output></label>
+<div class="seg" role="group" aria-label="Inflation measure"><button id="bCore" aria-pressed="true">Core</button><button id="bHead" aria-pressed="false">Headline</button><button id="bServ" aria-pressed="false">Services</button></div></div>
+<div class="ctrl"><label for="rStar">Neutral real rate <output id="oR">0.50%</output></label><input type="range" id="rStar" min="0" max="2" step="0.25" value="0.5"></div>
+<div class="ctrl"><label for="gap">Output gap <output id="oG">0.00%</output></label><input type="range" id="gap" min="-2" max="1" step="0.25" value="0"></div>
+</div>
+<p class="verdict" id="verdict"></p>
+<div class="formula"><code>i = r* + &pi; + 0.5(&pi; &minus; 2) + 0.5 &times; output gap</code><button class="btn ghost" id="reset">Reset to base case</button></div>
+</div>
+<div class="pgrid" style="margin-top:20px">
+<div>
+<h3>Method</h3>
+<p>A simple Taylor rule, which I ran across neutral real rates of 0.5 to 1.0%, output gaps of &minus;0.5 to 0% and three inflation measures (headline, core and services CPI). The model above is live, so please do try changing the inputs.</p>
+<h3>Finding</h3>
+<p>Core inflation implies a policy rate of 3.5 to 4.2%, which brackets today's Bank Rate. Headline implies 4.7 to 5.4%. One way to read this: markets seem to expect the MPC to respond to the energy shock rather than look through it. It was really interesting to see how much the answer depends on which inflation measure you choose.</p>
+</div>
+<div>
+<h3>Results grid</h3>
+<div class="tscroll"><table>
+<thead><tr><th>Inflation</th><th class="n">r* 0.5%</th><th class="n">r* 1.0%</th></tr></thead>
+<tbody>
+<tr><td>Core 2.8%</td><td class="n">3.45&ndash;3.70%</td><td class="n">3.95&ndash;4.20%</td></tr>
+<tr class="hl"><td>Headline 3.6%</td><td class="n">4.65&ndash;4.90%</td><td class="n">5.15&ndash;5.40%</td></tr>
+<tr><td>Services 3.7%</td><td class="n">4.80&ndash;5.05%</td><td class="n">5.30&ndash;5.55%</td></tr>
+</tbody></table></div>
+<p class="ex-n">Ranges cover output gaps from &minus;0.5% to 0%.</p>
+</div>
+</div>
+</article>
+
+<article class="proj" id="gilt">
+<div class="proj-head"><h2>Relative value trade idea: UK gilt curve</h2><div class="meta">Rates trade idea<br>DV01-neutral 2s10s steepener</div></div>
+<div class="pgrid">
+<div>
+<h3>The trade</h3>
+<p>Buy 2-year gilts and sell 10-year gilts, weighted so each side has the same sensitivity to yields (DV01-neutral). A parallel move in yields leaves the position flat; it makes money only if the curve steepens.</p>
+<h3>Why it should work</h3>
+<p>The 2-year yield moves most with expectations for Bank Rate, and it is priced for further hikes. If the MPC holds in December, those expectations come out of the front end, 2-year yields fall more than 10-year yields, and the curve steepens.</p>
+<h3>What could go wrong</h3>
+<p>The idea would lose money if higher oil prices feed into wages and the Bank raises rates more than expected. Exit triggers: regular pay growth back above 4%, or core CPI above 3%.</p>
+</div>
+<div class="ex">
+<div class="ex-t">Exhibit 3. Gilt curve now, and if the Bank holds</div>
+<div class="curve"><svg id="curve" role="img" aria-label="Gilt yields by maturity: 2-year about 5.0%, 10-year about 5.35%, with a steeper curve expected if the Bank holds"></svg></div>
+<p class="ex-n">Solid: approximate yields, mid-November 2026 (2-year about 5.0%, 10-year about 5.35%). Dashed: illustrative curve after a December hold.</p>
+</div>
+</div>
+</article>
+
+<article class="proj" id="credit">
+<div class="proj-head"><h2>Fixed income and credit analysis: Rolls-Royce</h2><div class="meta">Credit research<br>October 2026</div></div>
+<div class="pgrid">
+<div>
+<h3>Credit risk</h3>
+<p>I quantified Rolls-Royce's credit risk from its filings. Leverage of 0.5x gross debt to EBITDA, interest cover of 24.6x and &pound;9.0bn of liquidity suggest a balance sheet with plenty of headroom.</p>
+<h3>Bond relative value</h3>
+<p>I compared the EUR 1bn 2031/2036 bonds with the company's 2020 issue. The new bonds carry a 3.375% coupon, 1.25 percentage points lower, which reflects how far the credit has improved since 2020.</p>
+</div>
+<div class="ex">
+<div class="ex-t">Exhibit 4. Rolls-Royce credit metrics</div>
+<div class="tscroll"><table>
+<tbody>
+<tr><td>Gross debt / EBITDA</td><td class="n">0.5x</td></tr>
+<tr><td>Interest cover</td><td class="n">24.6x</td></tr>
+<tr><td>Liquidity</td><td class="n">&pound;9.0bn</td></tr>
+<tr><td>New issue</td><td class="n">EUR 1bn, 2031/2036</td></tr>
+<tr class="hl"><td>Coupon vs. 2020 issue</td><td class="n">3.375%, &minus;1.25pp</td></tr>
+</tbody></table></div>
+<p class="ex-n">Source: company filings.</p>
+</div>
+</div>
+</article>
+
+<h2 style="margin-top:56px">Corporate finance and equity projects</h2>
+<p class="small">Self-directed valuation work, July to September 2026.</p>
+
+<article class="proj" id="eqt">
+<div class="proj-head"><h2>M&amp;A valuation: EQT / Intertek &pound;10.9bn take-private</h2><div class="meta">Sell-side M&amp;A project<br>Jul &ndash; Sep 2026</div></div>
+<div class="pgrid">
+<div>
+<h3>The question</h3>
+<p>Private equity firm EQT agreed to take Intertek private at &pound;61.08 a share, a &pound;10.9bn enterprise value, after a 4-round bid process. I wanted to see for myself whether the offer was fair to Intertek's shareholders.</p>
+<h3>Method</h3>
+<p>I valued the company three ways. Trading comparables gave an enterprise value of &pound;9.9&ndash;10.7bn. Precedent transactions gave a view of what buyers had paid for similar businesses. A 5-year unlevered DCF in Excel, using a 7.5% CAPM-derived WACC, landed within 3% of the final deal terms.</p>
+<h3>Recommendation</h3>
+<p>All three approaches supported the price, so I concluded the &pound;61.08 offer looked fair and practised writing it up as a board memo.</p>
+</div>
+<div class="ex">
+<div class="ex-t">Exhibit 5. Valuation cross-check</div>
+<div class="tscroll"><table>
+<tbody>
+<tr><td>Trading comparables (EV)</td><td class="n">&pound;9.9&ndash;10.7bn</td></tr>
+<tr><td>Precedent transactions</td><td class="n">Cross-check</td></tr>
+<tr><td>DCF vs. deal terms</td><td class="n">within 3%</td></tr>
+<tr><td>WACC (CAPM)</td><td class="n">7.5%</td></tr>
+<tr class="hl"><td>Agreed EV / offer</td><td class="n">&pound;10.9bn / &pound;61.08</td></tr>
+</tbody></table></div>
+<p class="ex-n">Source: own model, from company filings and deal announcements.</p>
+</div>
+</div>
+</article>
+
+<article class="proj" id="abf">
+<div class="proj-head"><h2>Sum-of-the-parts: Associated British Foods</h2><div class="meta">Equity and strategy project<br>Jul &ndash; Aug 2026</div></div>
+<div class="pgrid">
+<div>
+<h3>The question</h3>
+<p>Associated British Foods combines Primark with grocery, sugar, agriculture and ingredients businesses. I was curious whether the market was valuing the group at less than the sum of its parts.</p>
+<h3>Method</h3>
+<p>I built a 5-segment sum-of-the-parts model, valuing each business on peer multiples and applying 35&ndash;45% discounts. The parts added up to &pound;21.1bn against a &pound;14.7bn market capitalisation, a 44% gap.</p>
+<h3>Catalyst</h3>
+<p>A demerger separating Primark from the food businesses (FoodCo) seemed to me the most likely way to close the gap, by letting investors value each on its own terms.</p>
+</div>
+<div class="ex">
+<div class="ex-t">Exhibit 6. Value of the parts vs. the market</div>
+<div class="tscroll"><table>
+<tbody>
+<tr><td>Segments valued</td><td class="n">5</td></tr>
+<tr><td>Discounts applied</td><td class="n">35&ndash;45%</td></tr>
+<tr><td>Sum of the parts</td><td class="n">&pound;21.1bn</td></tr>
+<tr><td>Market capitalisation</td><td class="n">&pound;14.7bn</td></tr>
+<tr class="hl"><td>Value gap</td><td class="n">+44%</td></tr>
+</tbody></table></div>
+<p class="ex-n">Source: own model, from company filings and peer multiples.</p>
+</div>
+</div>
+</article>
+
+<article class="proj" id="rreq">
+<div class="proj-head"><h2>Equity valuation: Rolls-Royce Holdings</h2><div class="meta">Equity research<br>Aug &ndash; Sep 2026</div></div>
+<div class="pgrid">
+<div>
+<h3>Method</h3>
+<p>I built an analytical model in Excel combining a 3-stage DCF with EV/EBITDA trading comparables, to reach an independent view on the shares.</p>
+<h3>Conclusion</h3>
+<p>The model gave a Hold rating with a value of 904p a share. It also became the starting point for my later credit work on the company's bonds.</p>
+</div>
+<div class="ex">
+<div class="ex-t">Exhibit 7. Rolls-Royce equity view</div>
+<div class="tscroll"><table>
+<tbody>
+<tr><td>DCF</td><td class="n">3-stage</td></tr>
+<tr><td>Comparables</td><td class="n">EV/EBITDA</td></tr>
+<tr class="hl"><td>Rating / value</td><td class="n">Hold, 904p</td></tr>
+</tbody></table></div>
+<p class="ex-n">Source: own model, from company filings.</p>
+</div>
+</div>
+</article>
+</section>
+
+<section class="view" id="v-experience" aria-label="Experience" hidden>
+<h1>Experience</h1>
+<p class="lede">Everything I've had the chance to do so far, most recent first, with the skills each experience helped me grow.</p>
+<div class="exp-intro">
+<div><strong>15 hrs</strong><span>a week as an NHS carer</span></div>
+<div><strong>1 of 24</strong><span>IEA interns from 700+ applicants</span></div>
+<div><strong>32</strong><span>students in the company I founded</span></div>
+<div><strong>1st of 47</strong><span>teams, SIFMA Stock Market Game</span></div>
+</div>
+<nav class="contents" aria-label="Sections on this page"><a href="#exp-work">Work</a><a href="#exp-lead">Leadership and programmes</a><a href="#exp-trade">Trading</a><a href="#exp-edu">Education</a><a href="#exp-awards">Awards and courses</a></nav>
+<div class="tl">
+<div>
+<div class="sec" id="exp-work"><h2>Work experience</h2>
+<div class="item"><div><h3>Part-time carer</h3><div class="org">NHS, Leicester</div></div><div class="when">Jun 2026 &ndash; now</div><p class="sum">A caring role I really value, alongside my degree, where people rely on me every week.</p><ul><li>Deliver 15 hours of care a week, tailored to each client's needs, building trusted relationships with clients and their families</li><li>Make calm, quick decisions as situations change, and escalate concerns to the right people promptly</li><li>Follow strict care procedures and keep accurate records that the next carer relies on</li><li>Completed 5-day training in agile thinking and adapting quickly to change in high-stress situations</li><li>Stay punctual and dependable on every shift while managing a full Cambridge workload</li></ul><div class="sk"><span>Judgement under pressure</span><span>Reliability</span><span>Communication</span><span>Time management</span></div></div>
+<div class="item"><div><h3>Mathematics tutor, Year 8 class</h3><div class="org">Leicester Grammar School</div></div><div class="when">Sep 2025 &ndash; Jun 2026</div><p class="sum">A teaching role at my old school, helping a Year 8 class enjoy maths through the year.</p><ul><li>Taught the class for 3 hours a week across the full school year</li><li>Broke complex problems into clear, logical steps, so students could follow the reasoning rather than memorise answers</li><li>Adapted my explanations to each student, trying a different approach when the first one didn't land</li></ul><div class="sk"><span>Explaining complex ideas</span><span>Patience</span><span>Structured thinking</span></div></div>
+<div class="item"><div><h3>Intern, Future Thought Leaders' Programme</h3><div class="org">Institute of Economic Affairs, Westminster</div></div><div class="when">Jul 2025</div><p class="sum">A wonderful week at an economic think tank, where I first got to debate monetary policy.</p><ul><li>Selected as 1 of 24 interns from 700+ applicants, a 3.4% acceptance rate</li><li>Analysed monetary policy to build the case for an independent Bank of England</li><li>Built and presented a think-tank pitch to 30+ economists as a team, within a 2-hour deadline</li><li>Defended our position under live questioning in a 2-minute debate format</li><li>Won both Best Debater and Best Team</li></ul><div class="sk"><span>Monetary policy</span><span>Persuasive argument</span><span>Teamwork under deadlines</span><span>Public speaking</span></div></div>
+</div>
+<div class="sec" id="exp-lead"><h2>Leadership and programmes</h2>
+<div class="item"><div><h3>Founder and project manager</h3><div class="org">Young Enterprise, Leicester</div></div><div class="when">Aug 2024 &ndash; Sep 2025</div><p class="sum">Starting a student company taught me how a good cause can become a real product.</p><ul><li>Founded and led a 32-student company selling self-written climate-awareness books</li><li>Generated &pound;3,500 in sales</li><li>Built an inclusive, collaborative team culture where every member contributed</li><li>Pitched our strategy and results to a panel of 5 judges and won the county Teamwork Award</li></ul><div class="sk"><span>Leadership</span><span>Project management</span><span>Commercial thinking</span><span>Pitching</span></div></div>
+<div class="item"><div><h3>Finance Summer School</h3><div class="org">University of Brighton</div></div><div class="when">Aug 2025</div><p class="sum">An intensive programme built around a live commercial case.</p><ul><li>Worked on a live client brief as part of a team of 7</li><li>Developed the client's idea into a full business plan in under 3 days</li><li>Presented our recommendation to a panel of 10 professionals</li></ul><div class="sk"><span>Teamwork</span><span>Business planning</span><span>Presenting</span></div></div>
+<div class="item"><div><h3>Invessed careers programme</h3><div class="org">Rare Recruitment</div></div><div class="when">Jun 2026 &ndash; now</div><p class="sum">A careers programme for students interested in financial services.</p><ul><li>Attended 10+ events and sessions with industry professionals</li><li>Networked and asked questions to understand careers across banking, markets and advisory</li></ul><div class="sk"><span>Networking</span><span>Industry knowledge</span></div></div>
+</div>
+</div>
+<div>
+<div class="sec" id="exp-trade"><h2>Trading competitions</h2>
+<div class="item"><div><h3>Cambridge University x Optiver Trade-a-thon</h3><div class="org">Cambridge Marshall Society, Optibook DeltaDash simulator</div></div><div class="when">Nov 2026</div><p class="sum">A live market making competition, trading a single stock against other students.</p><ul><li>Made markets live in a single stock, reacting to company-specific, probabilistic, market and general news</li><li>Turned each headline into an expected value quickly, the base of every good trade</li><li>Quoted both sides of the spread to earn steadily between news events</li><li>Anticipated how other traders would react, and overreact</li><li>Traded towards a flat book so one bad move couldn't undo my gains, then leaned into my spread more aggressively near the end</li></ul><div class="sk"><span>Market making</span><span>Expected value</span><span>Risk management</span><span>Speed</span></div></div>
+<div class="item"><div><h3>Portfolio manager, SIFMA Stock Market Game</h3><div class="org">Investment competition, Leicester</div></div><div class="when">Sep 2024 &ndash; Apr 2025</div><p class="sum">A national investment competition run over eight months.</p><ul><li>Managed a $100k equity portfolio with a team of 5</li><li>Researched companies and debated market events as a team before taking calculated risks</li><li>Delivered a 14.6% return in 8 months</li><li>Finished 1st in the East Midlands, outperforming 47 competing teams</li></ul><div class="sk"><span>Equity research</span><span>Teamwork</span><span>Risk-taking</span></div></div>
+</div>
+<div class="sec" id="exp-edu"><h2>Education</h2>
+<div class="item"><div><h3>BA Economics</h3><div class="org">Queens' College, University of Cambridge</div></div><div class="when">2026 &ndash; 2029</div><p class="sum">First year of the Economics Tripos.</p><ul><li>Part I papers: Microeconomics, Macroeconomic Principles, Quantitative Methods (mathematics, probability and statistics), Governing Britain since 1945, and Economic History</li><li>Member of the Cambridge Investment Banking Society, Finance Society and Trading Society</li><li>Bloomberg courses: Market Concepts (economic indicators, currencies, fixed income, equities), Financial Fundamentals and Spreadsheet Analysis</li></ul><div class="sk"><span>Macroeconomics</span><span>Statistics</span><span>Economic policy</span></div></div>
+<div class="item"><div><h3>Academic Scholar</h3><div class="org">Leicester Grammar School</div></div><div class="when">2019 &ndash; 2026</div><p class="sum">Academic Scholar through secondary school and sixth form.</p><ul><li>A-Levels: Mathematics A*, Further Mathematics A*, Physics A, Economics A</li><li>GCSEs: 11 Grade 9s, placing me in the top 145 students in the UK out of a cohort of 667,340 (top 0.02%)</li></ul><div class="sk"><span>Mathematics</span><span>Physics</span><span>Economics</span></div></div>
+</div>
+<div class="sec" id="exp-awards"><h2>Awards and courses</h2>
+<div class="item"><div><h3>Advanced Mathematics Problem Solving Course</h3><div class="org">University of Leicester</div></div><div class="when">Jul 2025</div><p class="sum">A national course for strong young mathematicians.</p><ul><li>Won 1 of 25 places nationally</li><li>Ranked 1st in the cohort with a score of 100%</li></ul><div class="sk"><span>Problem solving</span></div></div>
+<div class="item"><div><h3>Logic and Proof Course</h3><div class="org">University College London</div></div><div class="when">Jul 2025</div><p class="sum">A 5-day summer course in mathematical proof.</p><ul><li>Studied deduction, contradiction and contraposition</li><li>Learned to stress-test every step of an argument for flaws</li></ul><div class="sk"><span>Rigour</span><span>Logical reasoning</span></div></div>
+<div class="item"><div><h3>1st of 600+, economics essay competition</h3><div class="org">University of Exeter</div></div><div class="when">Jan 2025</div><p class="sum">A national essay competition on heat pump adoption.</p><ul><li>Used data from 3 subsidy schemes to design a risk-sharing rebate as a policy recommendation</li><li>Placed 1st out of more than 600 entries</li></ul><div class="sk"><span>Policy analysis</span><span>Writing</span></div></div>
+<div class="item"><div><h3>UKMT Gold</h3><div class="org">UK Mathematics Trust</div></div><div class="when">&nbsp;</div><p class="sum">A national mathematics challenge run by the UK Mathematics Trust.</p><ul><li>Awarded a Gold certificate, given to the top-scoring participants nationally</li></ul><div class="sk"><span>Mathematics</span></div></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="view" id="v-blog" aria-label="Blog" hidden>
+<h1>Blog</h1>
+<p class="lede">Short pieces on things I'm learning about: markets, central banks and the odd trading competition.</p>
+<ul class="bloglist" style="margin-top:20px"><li><a href="#post-optiver">What I learned making markets at the Optiver Trade-a-thon</a><span class="pd">24 Nov 2026</span><p>Five lessons from trading a single stock live, from expected value to knowing when to take risk.</p></li><li><a href="#post-boe">Why I think the Bank of England can afford to wait</a><span class="pd">20 Nov 2026</span><p>Markets expect another rate rise in December. Here's why I lean the other way, and what would change my mind.</p></li><li><a href="#post-taylor">Which inflation should a Taylor rule use?</a><span class="pd">15 Nov 2026</span><p>Building a simple model taught me that the 'right' interest rate depends a lot on one choice.</p></li></ul>
+<article class="proj post" id="post-optiver">
+<div class="proj-head"><h2>What I learned making markets at the Optiver Trade-a-thon</h2><div class="meta">24 Nov 2026</div></div>
+<div class="post-body"><p>Earlier this term I took part in the Cambridge University x Optiver Trade-a-thon, run with the Cambridge Marshall Society. We traded a single stock live on Optibook's DeltaDash market making simulator, reacting to company-specific, probabilistic, market and general news. It was fast, a little chaotic and great fun. Here are my five takeaways.</p>
+<h3>1. Quantitative analysis comes first</h3>
+<p>Turning each headline into an expected value quickly was the foundation of every good trade. When I did the maths first, I traded calmly; when I didn't, I guessed.</p>
+<h3>2. Manage your spread</h3>
+<p>Quoting both sides earned steady profit between news events. Most of the time, being a reliable market maker mattered more than being clever.</p>
+<h3>3. Read the room</h3>
+<p>Anticipating how others would react, and overreact, was as valuable as the maths. Prices move on what people believe, not only on what is true.</p>
+<h3>4. Trade towards a flat book</h3>
+<p>Controlling my position stopped one bad move from undoing my gains. It's the trading version of not putting all your eggs in one basket.</p>
+<h3>5. Know when to take risk</h3>
+<p>Leaning into my spread more aggressively towards the end made the difference in the rankings. Being careful all day is what made it possible to be bold at the right moment.</p>
+<p>A big thank you to Optiver and the Cambridge Marshall Society for a brilliant event. I'd love to do it again.</p></div>
+</article>
+<article class="proj post" id="post-boe">
+<div class="proj-head"><h2>Why I think the Bank of England can afford to wait</h2><div class="meta">20 Nov 2026</div></div>
+<div class="post-body"><p>In November the Bank of England raised interest rates to 4.00%, and markets now think another rise in December is very likely. I've been trying to work out whether I agree, and I keep landing on the same answer: the Bank can probably afford to wait.</p>
+<h3>What's pushing inflation up?</h3>
+<p>Headline inflation rose to 3.6% in October, but most of the increase came from record diesel prices and a tobacco duty rise. Core inflation, which strips out energy and food, stayed at 2.8%, and regular pay growth actually slowed to 3.5%. That looks to me like an energy shock rather than an economy running too hot.</p>
+<h3>Why that matters</h3>
+<p>Higher interest rates can't make oil cheaper. They work by cooling demand, which takes time and hurts households and businesses along the way. If the pressure is coming from energy, raising rates risks doing the pain without much of the gain.</p>
+<h3>What would change my mind</h3>
+<p>Services inflation is still 3.7% and unemployment has fallen to 4.6%. If higher fuel prices start feeding into wage demands, the picture changes, and a rise would make sense. So my view is a patient "hold for now", with the door left open.</p>
+<p>I'll be watching the decision on 17 December with real interest, and I'll write a follow-up on whether I got it right. You can read the <a href="#mpc">full note on my projects page</a>.</p></div>
+</article>
+<article class="proj post" id="post-taylor">
+<div class="proj-head"><h2>Which inflation should a Taylor rule use?</h2><div class="meta">15 Nov 2026</div></div>
+<div class="post-body"><p>The Taylor rule is a simple formula for where a central bank's interest rate "should" be, based on inflation and how much spare capacity there is in the economy. I built a version for the UK, expecting a neat answer. Instead it taught me how much depends on a single choice.</p>
+<h3>The surprise</h3>
+<p>Using core inflation (2.8%), the rule suggests a rate of about 3.5 to 4.2%, right around today's Bank Rate of 4.00%. Using headline inflation (3.6%), the same rule says 4.7 to 5.4%. Same formula, same economy, a gap of more than a percentage point.</p>
+<h3>Why it matters</h3>
+<p>Headline inflation includes energy prices, which central banks can't control and which often fade on their own. Core inflation is a better guide to underlying pressure. Markets pricing several more rate rises seem closer to the headline answer, which suggests they expect the Bank not to look through the energy shock.</p>
+<h3>Try it yourself</h3>
+<p>I've put a <a href="#taylor">live version of the model</a> on my projects page. Switch between core, headline and services inflation, and move the sliders to see how sensitive the answer is.</p></div>
+</article>
+</section>
+
+<section class="view" id="v-contact" aria-label="Contact" hidden>
+<div class="contact">
+<div>
+<h1>Contact</h1>
+<p class="lede">I'd love to hear from you, whether it's about monetary policy, markets or any of my projects. Email is the best way to reach me, and I'll always reply.</p>
+<div class="cta"><a class="btn" href="mailto:jpkp2@cam.ac.uk">Send me an email</a><a class="btn ghost" href="https://linkedin.com/in/jasleen-poonie">LinkedIn</a></div>
+</div>
+<div class="panel">
+<dl>
+<dt>Email</dt><dd>jpkp2@cam.ac.uk</dd>
+<dt>LinkedIn</dt><dd>linkedin.com/in/jasleen-poonie</dd>
+<dt>Based in</dt><dd>Cambridge, UK</dd>
+<dt>Languages</dt><dd>English, Punjabi</dd>
+</dl>
+</div>
+</div>
+</section>
+</main>
+
+<footer><div class="wrap">These are student projects I did to learn. Data as of 18 November 2026, from the ONS, the Bank of England and company filings. Views are my own.</div></footer>
+
+<script>
+{
+const VIEWS=['overview','projects','experience','blog','contact'];
+const POSTS=['post-optiver','post-boe','post-taylor'];
+const PROJ=['mpc','taylor','gilt','credit','eqt','abf','rreq'];
+const EXPS=['exp-work','exp-lead','exp-trade','exp-edu','exp-awards'];
+const $=id=>document.getElementById(id);
+const PI={core:2.8,head:3.6,serv:3.7};
+const BANK=4.0,MKT=4.75,LO=2,HI=6.5;
+const base={m:'core',r:0.5,g:0};
+let st={...base};
+const svg=$('scale'),cv=$('curve');
+const btns={core:$('bCore'),head:$('bHead'),serv:$('bServ')};
+const rate=()=>{const p=PI[st.m];return st.r+p+0.5*(p-2)+0.5*st.g};
+const fmt=x=>x.toFixed(2)+'%';
+const draw=()=>{
+  const W=svg.clientWidth,H=svg.clientHeight;if(!W)return;
+  const L=16,R=W-16,y=H*0.6,x=v=>L+(Math.min(HI,Math.max(LO,v))-LO)/(HI-LO)*(R-L);
+  const t=rate(),narrow=W<520;
+  let s=`<rect x="${x(LO)}" y="${y-5}" width="${x(HI)-x(LO)}" height="10" fill="var(--rule)"/>`;
+  s+=`<rect x="${Math.min(x(BANK),x(t))}" y="${y-5}" width="${Math.abs(x(t)-x(BANK))}" height="10" fill="var(--acc)" opacity=".35"/>`;
+  for(let i=0;i<=(HI-LO)*4;i++){
+    const v=LO+i/4,maj=i%4===0,half=i%2===0,h=maj?14:half?9:5;
+    s+=`<line x1="${x(v)}" x2="${x(v)}" y1="${y+7}" y2="${y+7+h}" stroke="var(--mute)" stroke-width="${maj?1.3:1}"/>`;
+    if(maj||(half&&!narrow))s+=`<text x="${x(v)}" y="${y+38}" text-anchor="middle" font-size="13" fill="var(--mute)">${maj?v.toFixed(0):v.toFixed(1)}%</text>`;
+  }
+  const mark=(v,label,col,anc)=>`<line x1="${x(v)}" x2="${x(v)}" y1="${y-9}" y2="${y-28}" stroke="${col}" stroke-width="2"/><circle cx="${x(v)}" cy="${y}" r="5" fill="${col}"/><text x="${x(v)}" y="${y-34}" text-anchor="${anc}" font-size="14" font-weight="500" fill="var(--ink)">${label}</text>`;
+  const marks=mark(BANK,narrow?'Bank 4.00%':'Bank Rate 4.00%','var(--ink)','end')+mark(MKT,narrow?'Mkt ~4.75%':'Market path ~4.75%','var(--mute)','start');
+  const px=x(t),anc=px>R-90?'end':px<L+90?'start':'middle';
+  s+=`<g id="ptr" style="transform:translateX(${px}px);transition:transform .45s cubic-bezier(.2,.7,.2,1)"><polygon points="0,${y+6} -8,${y-13} 8,${y-13}" fill="var(--acc)"/><line x1="0" x2="0" y1="${y-13}" y2="${H*0.15}" stroke="var(--acc)" stroke-width="2"/><text x="0" y="${H*0.15-6}" text-anchor="${anc}" font-size="15" font-weight="600" fill="var(--acc)">Taylor rule ${fmt(t)}</text></g>`+marks;
+  svg.innerHTML=s;
+};
+const drawCurve=()=>{
+  const W=cv.clientWidth,H=cv.clientHeight;if(!W)return;
+  const L=46,R=W-14,T=16,B=H-28,mats=[2,5,10],yLo=4.65,yHi=5.5;
+  const x=m=>L+(m-2)/8*(R-L),y=v=>T+(yHi-v)/(yHi-yLo)*(B-T);
+  const now=[5.0,5.2,5.35],after=[4.75,5.05,5.3];
+  const path=a=>a.map((v,i)=>(i?'L':'M')+x(mats[i])+' '+y(v)).join(' ');
+  let s='';
+  [4.8,5.0,5.2,5.4].forEach(v=>{s+=`<line x1="${L}" x2="${R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--rule)"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end" font-size="13" fill="var(--mute)">${v.toFixed(1)}%</text>`});
+  mats.forEach((m,i)=>{s+=`<text x="${x(m)}" y="${H-6}" text-anchor="${i===0?'start':i===2?'end':'middle'}" font-size="13" fill="var(--mute)">${m}-year</text>`});
+  s+=`<path d="${path(after)}" fill="none" stroke="var(--acc)" stroke-width="2.5" stroke-dasharray="6 5"/>`;
+  s+=`<path d="${path(now)}" fill="none" stroke="var(--ink)" stroke-width="2.5"/>`;
+  now.forEach((v,i)=>{s+=`<circle cx="${x(mats[i])}" cy="${y(v)}" r="4" fill="var(--ink)"/>`});
+  s+=`<text x="${x(2)+6}" y="${y(5.42)}" font-size="13" fill="var(--ink)">Now: 2s10s ~+35bp</text>`;
+  s+=`<text x="${R}" y="${y(4.72)}" text-anchor="end" font-size="13" fill="var(--acc)">After a hold: steeper</text>`;
+  cv.innerHTML=s;
+};
+const update=()=>{
+  const t=rate(),d=Math.round((t-BANK)*100);
+  $('roT').textContent=fmt(t);
+  $('oPi').textContent=PI[st.m].toFixed(1)+'%';
+  $('oR').textContent=st.r.toFixed(2)+'%';
+  $('oG').textContent=(st.g>0?'+':'')+st.g.toFixed(2)+'%';
+  $('rStar').value=st.r;$('gap').value=st.g;
+  for(const k in btns)btns[k].setAttribute('aria-pressed',String(k===st.m));
+  $('verdict').textContent=Math.abs(d)<=15?`Within ${Math.abs(d)}bp of Bank Rate: no case for a hike.`:d>0?`${d}bp above Bank Rate: the case for hiking.`:`${-d}bp below Bank Rate: room to hold.`;
+  draw();
+};
+const route=()=>{
+  const h=location.hash.slice(1);
+  const v=VIEWS.includes(h)?h:PROJ.includes(h)?'projects':EXPS.includes(h)?'experience':POSTS.includes(h)?'blog':'overview';
+  VIEWS.forEach(n=>{$('v-'+n).hidden=n!==v});
+  document.querySelectorAll('.tabs a').forEach(a=>{if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+  if(PROJ.includes(h)||EXPS.includes(h)||POSTS.includes(h))requestAnimationFrame(()=>$(h).scrollIntoView());else window.scrollTo(0,0);
+  draw();drawCurve();
+};
+for(const k in btns)btns[k].addEventListener('click',()=>{st.m=k;update()});
+$('rStar').addEventListener('input',e=>{st.r=+e.target.value;update()});
+$('gap').addEventListener('input',e=>{st.g=+e.target.value;update()});
+$('reset').addEventListener('click',()=>{st={...base};update()});
+const ro1=new ResizeObserver(draw);ro1.observe(svg);
+const ro2=new ResizeObserver(drawCurve);ro2.observe(cv);
+window.addEventListener('hashchange',route);
+update();route();
+}
+</script>
+</body>
+</html>
